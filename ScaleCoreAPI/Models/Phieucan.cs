@@ -28,5 +28,6 @@ namespace ScaleCoreAPI.Models
         public byte[] Cam2 { get; set; }
         public byte[] Cam3 { get; set; }
         public byte[] BienSoXe { get; set; }
+        public byte[] BienSoXeRa { get; set; }
     }
 }
