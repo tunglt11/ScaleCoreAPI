@@ -44,12 +44,18 @@ namespace ScaleCoreAPI.Controllers
 
         // GET: api/Phieucans/startdate/enddate
         [HttpGet("{startDate}/{endDate}")]
-        public async Task<ActionResult<IEnumerable<Phieucan>>> GetPhieucanByDate(DateTime startdate, DateTime endDate)
+        public async Task<ActionResult<IEnumerable<object>>> GetPhieucanByDate(DateTime startdate, DateTime endDate)
         {
             return await _context.Phieucan
                 .FromSqlRaw("select * from PhieuCan")
                 .Where(p => p.NgayCanLan1 >= startdate && p.NgayCanLan1 <= endDate)
                 .OrderByDescending(p => p.MaPhieu)
+                .Select(p => new
+                {
+                    BSX = p.Bsx,
+                    KlHang = p.KlcanLan1 - p.KlcanLan2,
+                    NgayCanLan1 = p.NgayCanLan1
+                }) 
                 .ToListAsync();            
         }
 
@@ -131,5 +137,5 @@ namespace ScaleCoreAPI.Controllers
         {
             return _context.Phieucan.Any(e => e.Id == id);
         }
-    }
+    }    
 }
